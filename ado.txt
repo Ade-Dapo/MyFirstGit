@@ -1,0 +1,77 @@
+using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Ado.netClass
+{
+    public class Student
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Email { get; set; }    
+    
+
+
+        public void CreateTable(Student std)
+        {
+            MySqlConnection con = null;
+            try
+            {
+                // Creating Connection  
+                con = new MySqlConnection("Server= localhost; User=root; database=student; password=1234");
+                // writing sql query  
+              // MySqlCommand cm = new MySqlCommand("create table student(id int not null , name varchar(100),address varchar(50), email varchar(50))", con);
+
+               //MySqlCommand cm1 = new MySqlCommand("CREATE TABLE Teachers (Teacherid int NOT NULL AUTO_INCREMENT,    LastName varchar(255) NOT NULL, FirstName varchar(255),Age int, PRIMARY KEY (Teacherid));", con);
+
+               MySqlCommand insert = new MySqlCommand($"INSERT INTO student (id, name,email,address) VALUES ( 1, '{std.Name}','{std.Email}','{std.Address}');", con);
+
+                //MySqlCommand insert = new MySqlCommand($"INSERT INTO Teachers (LastName,FirstName,Age) VALUES ('ttOla2','oyyla@gmail.com',45);", con);
+
+                // Opening Connection  
+                con.Open();
+
+                // Executing the SQL query  
+               //cm.ExecuteNonQuery();
+              // cm1.ExecuteNonQuery();
+              insert.ExecuteNonQuery();
+                //insert.ExecuteReader();
+
+                // Displaying a message  
+                Console.WriteLine("Table created Successfully");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("OOPs, something went wrong." + e);
+            }
+            // Closing the connection  
+            finally
+            {
+                con.Close();
+            }
+        }
+
+    }
+
+}
+
+
+-------------------------------------------------------------------------
+program class:
+
+using Ado.netClass;
+
+Console.WriteLine("Hello, World!");
+
+
+Student student = new Student();
+student.Name = "sangooooo";
+student.Email = "sydtydt@gmail.com";
+student.Address = "abolade area";
+
+
+student.CreateTable(student);
